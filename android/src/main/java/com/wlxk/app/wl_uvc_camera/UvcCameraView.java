@@ -100,8 +100,7 @@ public class UvcCameraView implements PlatformView {
                     }
                     Looper.prepare();
                     if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-//                            mSeekBrightness.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_BRIGHTNESS));
-//                            mSeekContrast.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_CONTRAST));
+                        mChannel.invokeMethod("cameraOpened", true);
                     }
                     Looper.loop();
                 }).start();
@@ -110,7 +109,7 @@ public class UvcCameraView implements PlatformView {
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-//            showShortMsg("disconnecting");
+            mChannel.invokeMethod("cameraOpened", false);
         }
     };
 

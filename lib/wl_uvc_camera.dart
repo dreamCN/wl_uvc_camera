@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 class WlUvcCamera {
   static String picPath = "";
+  static bool cameraOpened = false;
 
   static final MethodChannel _channel = const MethodChannel('wl_uvc_camera')
     ..setMethodCallHandler(_methodChannelHandler);
@@ -18,8 +19,8 @@ class WlUvcCamera {
     await _channel.invokeMethod('takePicture');
     int n = 5;
     String path = "";
-    while(n > 0) {
-      if(picPath.isNotEmpty) {
+    while (n > 0) {
+      if (picPath.isNotEmpty) {
         path = picPath;
         picPath = "";
         break;
@@ -40,6 +41,10 @@ class WlUvcCamera {
         print('-----收到来自Android的消息');
         print(call.arguments);
         result = "收到来自Android的消息";
+        break;
+      case "cameraOpened":
+        cameraOpened = call.arguments ?? false;
+        result = call.arguments.toString();
         break;
       case "takePictureSuccess":
         picPath = call.arguments;
