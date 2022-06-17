@@ -32,6 +32,14 @@ class WlUvcCamera {
     return path;
   }
 
+  static startPreview() {
+    _channel.invokeMethod("startPreview");
+  }
+
+  static stopPreview() {
+    _channel.invokeMethod("stopPreview");
+  }
+
   //方法是异步的
   static Future<String> _methodChannelHandler(MethodCall call) async {
     String result = "";
