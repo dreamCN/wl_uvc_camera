@@ -36,6 +36,12 @@ public class WlUvcCameraPlugin implements FlutterPlugin, MethodCallHandler {
         } else if (call.method.equals("takePicture")) {
             mUvcCameraFactory.takePicture();
             result.success("takePicture");
+        } else if (call.method.equals("startPreview")) {
+            mUvcCameraFactory.startPreview();
+            result.success("startPreview");
+        } else if (call.method.equals("stopPreview")) {
+            mUvcCameraFactory.stopPreview();
+            result.success("stopPreview");
         } else {
             result.notImplemented();
         }

@@ -36,4 +36,12 @@ public class UvcCameraFactory extends PlatformViewFactory {
         mUvcCameraView.takePicture();
     }
 
+    public void startPreview() {
+        mUvcCameraView.startPreview();
+    }
+
+    public void stopPreview() {
+        mUvcCameraView.stopPreview();
+    }
+
 }

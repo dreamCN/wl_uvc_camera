@@ -144,6 +144,20 @@ public class UvcCameraView implements PlatformView {
         mChannel.invokeMethod("callFlutter", "takePicture");
     }
 
+    public void startPreview() {
+        if (!isPreview) {
+            mCameraHelper.startPreview(mUVCCameraView);
+            isPreview = true;
+        }
+    }
+
+    public void stopPreview() {
+        if (isPreview) {
+            mCameraHelper.stopPreview();
+            isPreview = false;
+        }
+    }
+
     @Override
     public View getView() {
         return mNativeView;
