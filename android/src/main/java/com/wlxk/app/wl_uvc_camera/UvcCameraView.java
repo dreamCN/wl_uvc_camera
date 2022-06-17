@@ -100,7 +100,8 @@ public class UvcCameraView implements PlatformView {
                     }
                     Looper.prepare();
                     if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-                        mChannel.invokeMethod("cameraOpened", true);
+                        new Handler(Looper.getMainLooper()).post(() ->
+                                mChannel.invokeMethod("cameraOpened", true));
                     }
                     Looper.loop();
                 }).start();
