@@ -110,7 +110,8 @@ public class UvcCameraView implements PlatformView {
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-            mChannel.invokeMethod("cameraOpened", false);
+            new Handler(Looper.getMainLooper()).post(() ->
+                    mChannel.invokeMethod("cameraOpened", false));
         }
     };
 
