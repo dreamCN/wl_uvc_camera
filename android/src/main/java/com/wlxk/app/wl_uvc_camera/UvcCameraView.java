@@ -124,8 +124,8 @@ public class UvcCameraView implements PlatformView {
     private void initUVCCamera(Context context) {
         mCameraHelper = UVCCameraHelper.getInstance();
         mUVCCameraView.setCallback(callback);
-        mCameraHelper.setDefaultPreviewSize(1280, 720);
         mCameraHelper.initUSBMonitor(context, mUVCCameraView, listener);
+        mCameraHelper.setDefaultPreviewSize(1280, 720);
         mCameraHelper.setOnPreviewFrameListener(nv21Yuv -> {
 //            Log.d("", "onPreviewResult: " + nv21Yuv.length);
         });
@@ -137,6 +137,11 @@ public class UvcCameraView implements PlatformView {
         if(!isPreview) {
             mCameraHelper.startPreview(mUVCCameraView);
             isPreview = true;
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+
         }
         String picPath = com.jiangdg.usbcamera.UVCCameraHelper.ROOT_PATH + "USBCamera/images/"
                 + System.currentTimeMillis() + com.jiangdg.usbcamera.UVCCameraHelper.SUFFIX_JPEG;
