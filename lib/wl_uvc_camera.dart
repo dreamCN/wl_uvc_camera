@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class WlUvcCamera {
-  static String picPath = "";
-  static bool cameraOpened = false;
+  static String _picPath = "";
+  static bool _cameraOpened = false;
 
   static final MethodChannel _channel = const MethodChannel('wl_uvc_camera')
     ..setMethodCallHandler(_methodChannelHandler);
+
+  static String get picPath => _picPath;
+
+  static bool get cameraOpened => _cameraOpened;
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
@@ -15,14 +19,14 @@ class WlUvcCamera {
   }
 
   static Future<String> takePicture() async {
-    picPath = "";
+    _picPath = "";
     await _channel.invokeMethod('takePicture');
     int n = 5;
     String path = "";
     while (n > 0) {
-      if (picPath.isNotEmpty) {
-        path = picPath;
-        picPath = "";
+      if (_picPath.isNotEmpty) {
+        path = _picPath;
+        _picPath = "";
         break;
       } else {
         await Future.delayed(const Duration(milliseconds: 100));
@@ -51,11 +55,13 @@ class WlUvcCamera {
         result = "收到来自Android的消息";
         break;
       case "cameraOpened":
-        cameraOpened = call.arguments ?? false;
+        print('-----cameraOpened');
+        print(call.arguments);
+        _cameraOpened = call.arguments ?? false;
         result = call.arguments.toString();
         break;
       case "takePictureSuccess":
-        picPath = call.arguments;
+        _picPath = call.arguments;
         break;
     }
     return result;
