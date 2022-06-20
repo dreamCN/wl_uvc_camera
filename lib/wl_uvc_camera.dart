@@ -56,12 +56,6 @@ class WlUvcCamera {
         print(call.arguments);
         result = "收到来自Android的消息";
         break;
-      case "cameraOpened":
-        print('-----cameraOpened');
-        print(call.arguments);
-        _cameraOpened = call.arguments ?? false;
-        result = call.arguments.toString();
-        break;
       case "takePictureSuccess":
         _picPath = call.arguments;
         break;
