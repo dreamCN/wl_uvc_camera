@@ -4,14 +4,16 @@ import 'package:flutter/services.dart';
 
 class WlUvcCamera {
   static String _picPath = "";
-  static bool _cameraOpened = false;
 
   static final MethodChannel _channel = const MethodChannel('wl_uvc_camera')
     ..setMethodCallHandler(_methodChannelHandler);
 
   static String get picPath => _picPath;
 
-  static bool get cameraOpened => _cameraOpened;
+  static Future<bool> get isCameraOpened async {
+    final bool? cameraOpened = await _channel.invokeMethod('isCameraOpened');
+    return cameraOpened ?? false;
+  }
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
