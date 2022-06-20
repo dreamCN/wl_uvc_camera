@@ -134,7 +134,10 @@ public class UvcCameraView implements PlatformView {
     }
 
     public void takePicture() {
-
+        if(!isPreview) {
+            mCameraHelper.startPreview(mUVCCameraView);
+            isPreview = true;
+        }
         String picPath = com.jiangdg.usbcamera.UVCCameraHelper.ROOT_PATH + "USBCamera/images/"
                 + System.currentTimeMillis() + com.jiangdg.usbcamera.UVCCameraHelper.SUFFIX_JPEG;
 
