@@ -45,7 +45,11 @@ public class UvcCameraFactory extends PlatformViewFactory {
     }
 
     public Boolean isCameraOpened() {
-        return mUvcCameraView.isCameraOpened();
+        Boolean cameraOpened = mUvcCameraView.isCameraOpened();
+        if(null == cameraOpened) {
+            cameraOpened = false;
+        }
+        return cameraOpened;
     }
 
 }
