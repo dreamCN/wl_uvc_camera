@@ -99,8 +99,8 @@ public class UvcCameraView implements PlatformView {
                         e.printStackTrace();
                     }
                     if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-                        new Handler(Looper.getMainLooper()).post(() ->
-                                mChannel.invokeMethod("cameraOpened", true));
+//                        new Handler(Looper.getMainLooper()).post(() ->
+//                                mChannel.invokeMethod("cameraOpened", true));
                     }
                 }).start();
             }
@@ -108,8 +108,8 @@ public class UvcCameraView implements PlatformView {
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-            new Handler(Looper.getMainLooper()).post(() ->
-                    mChannel.invokeMethod("cameraOpened", false));
+//            new Handler(Looper.getMainLooper()).post(() ->
+//                    mChannel.invokeMethod("cameraOpened", false));
         }
     };
 
@@ -159,6 +159,10 @@ public class UvcCameraView implements PlatformView {
             mCameraHelper.stopPreview();
             isPreview = false;
         }
+    }
+
+    public Boolean isCameraOpened() {
+        return mCameraHelper.isCameraOpened();
     }
 
     @Override

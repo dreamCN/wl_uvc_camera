@@ -44,4 +44,8 @@ public class UvcCameraFactory extends PlatformViewFactory {
         mUvcCameraView.stopPreview();
     }
 
+    public Boolean isCameraOpened() {
+        return mUvcCameraView.isCameraOpened();
+    }
+
 }
