@@ -33,8 +33,9 @@ public class WlUvcCameraPlugin implements FlutterPlugin, MethodCallHandler {
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
-        }if (call.method.equals("isCameraOpened")) {
-            result.success(mUvcCameraFactory.isCameraOpened());
+        } else if (call.method.equals("isCameraOpened")) {
+            Boolean cameraOpened = mUvcCameraFactory.isCameraOpened();
+            result.success(cameraOpened.toString());
         } else if (call.method.equals("takePicture")) {
             mUvcCameraFactory.takePicture();
             result.success("takePicture");

@@ -10,9 +10,9 @@ class WlUvcCamera {
 
   static String get picPath => _picPath;
 
-  static Future<bool> get isCameraOpened async {
-    final bool? cameraOpened = await _channel.invokeMethod('isCameraOpened');
-    return cameraOpened ?? false;
+  static Future<bool> isCameraOpened() async {
+     // bool? cameraOpened = await _channel.invokeMethod('isCameraOpened');
+    return false;
   }
 
   static Future<String?> get platformVersion async {

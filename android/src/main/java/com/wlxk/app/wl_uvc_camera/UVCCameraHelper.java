@@ -98,18 +98,15 @@ public class UVCCameraHelper {
             public void onConnect(final UsbDevice device, USBMonitor.UsbControlBlock ctrlBlock, boolean createNew) {
                 mCtrlBlock = ctrlBlock;
                 openCamera(ctrlBlock);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // wait for camera created
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        // start previewing
-                        startPreview(mCamView);
+                new Thread(() -> {
+                    // wait for camera created
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    // start previewing
+                    startPreview(mCamView);
                 }).start();
                 if (listener != null) {
                     listener.onConnectDev(device, true);
@@ -162,18 +159,15 @@ public class UVCCameraHelper {
         mCameraHandler = UVCCameraHandler.createHandler(mContext, mCamView, 2,
                 previewWidth, previewHeight, mFrameFormat);
         openCamera(mCtrlBlock);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // wait for camera created
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // start previewing
-                startPreview(mCamView);
+        new Thread(() -> {
+            // wait for camera created
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            // start previewing
+            startPreview(mCamView);
         }).start();
     }
 

@@ -26,14 +26,14 @@ public class UvcCameraView implements PlatformView {
     private UVCCameraHelper mCameraHelper;
     private Boolean isRequest = false;
     private Boolean isPreview = false;
+    private Boolean isCameraOpened = false;
 
     private CameraViewInterface.Callback callback = new CameraViewInterface.Callback() {
 
         @Override
         public void onSurfaceCreated(CameraViewInterface view, Surface surface) {
             if (!isPreview && mCameraHelper.isCameraOpened()) {
-                mCameraHelper.startPreview(mUVCCameraView);
-                isPreview = true;
+                isCameraOpened = true;
             }
         }
 
@@ -85,31 +85,16 @@ public class UvcCameraView implements PlatformView {
         @Override
         public void onConnectDev(UsbDevice device, boolean isConnected) {
             if (!isConnected) {
-//                showShortMsg("fail to connect,please check resolution params");
                 isPreview = false;
             } else {
                 isPreview = true;
-//                showShortMsg("connecting");
-                // initialize seekbar
-                // need to wait UVCCamera initialize over
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(2500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-//                        new Handler(Looper.getMainLooper()).post(() ->
-//                                mChannel.invokeMethod("cameraOpened", true));
-                    }
-                }).start();
+                isCameraOpened = true;
             }
         }
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-//            new Handler(Looper.getMainLooper()).post(() ->
-//                    mChannel.invokeMethod("cameraOpened", false));
+            isCameraOpened = false;
         }
     };
 
@@ -124,12 +109,11 @@ public class UvcCameraView implements PlatformView {
     private void initUVCCamera(Context context) {
         mCameraHelper = UVCCameraHelper.getInstance();
         mUVCCameraView.setCallback(callback);
-        mCameraHelper.initUSBMonitor(context, mUVCCameraView, listener);
         mCameraHelper.setDefaultPreviewSize(1280, 720);
+        mCameraHelper.initUSBMonitor(context, mUVCCameraView, listener);
         mCameraHelper.setOnPreviewFrameListener(nv21Yuv -> {
 //            Log.d("", "onPreviewResult: " + nv21Yuv.length);
         });
-
         mCameraHelper.registerUSB();
     }
 
@@ -167,7 +151,7 @@ public class UvcCameraView implements PlatformView {
     }
 
     public Boolean isCameraOpened() {
-        return mCameraHelper.isCameraOpened();
+        return isCameraOpened;
     }
 
     @Override
