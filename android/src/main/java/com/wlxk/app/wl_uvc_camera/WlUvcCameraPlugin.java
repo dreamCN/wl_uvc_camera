@@ -1,5 +1,7 @@
 package com.wlxk.app.wl_uvc_camera;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
